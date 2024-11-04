@@ -87,7 +87,7 @@ class LinkedList
             Node prvek = Head;
             while (prvek != null)
             {
-                if (prvek.Value < Value)
+                if (prvek.Value < value)
                     if (prvek.Next != null)
                         prvek = prvek.Next;
                     else
@@ -96,12 +96,12 @@ class LinkedList
                     break;
 
             }
-            if (prvek != null)
-            {
-                Node newNode = new Node(value);
-                newNode.Next = prvek.Head;
-                prvek.Next = newNode;
-            }
+            //if (prvek != null)
+            //{
+            //    Node newNode = new Node(value);
+            //    newNode.Next = prvek;
+            //    prvek.Next = newNode;
+            //}
 
         }
 
