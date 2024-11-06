@@ -7,7 +7,18 @@ class Program
     {
         static void Main(string[] args)
         {
-            Node uzlik = new Node(8);
+            LinkedList list = new LinkedList();
+            list.Add(3);
+            list.Add(6);
+            list.Add(4);
+            list.Add(5);
+            list.Add(7);
+
+        Console.WriteLine("původní LL");
+        list.PrintLinkedList();
+        list.SortLinkedList();
+        Console.WriteLine("\nseřazený LL");
+        list.PrintLinkedList();
         }
     }
     class Node
@@ -22,10 +33,6 @@ class Program
 class LinkedList
 
 {
-    public LinkedList()
-    {
-
-    }
     public Node Head { get; set; }
     public void Add(int value)
     {
@@ -64,44 +71,45 @@ class LinkedList
         }
 
     }
+    
     public void SortLinkedList()
     {
-        LinkedList newList = new LinkedList();
-        newList.Head = new Node (Head.Value);
-        if (Head != null)
-        {
-            Node prvek = Head.Next;
-            while (prvek != null)
-            {
-                newList.InsertSorted(prvek.Value);
-                prvek = prvek.Next;
-            }
-        }       
-    }
-    public void InsertSorted(int value)
-    {
         if (Head == null)
-            Head = new Node(value);
+            return; 
+
+        LinkedList newList = new LinkedList();
+
+        Node current = Head;
+        while (current != null)
+        {
+            newList.InsertSorted(current.Value);
+            current = current.Next;
+        }
+
+        Head = newList.Head; 
+    }
+
+    public void InsertSorted(int value)
+
+    {
+        Node newNode = new Node (value);
+        if (Head == null || Head.Value >= newNode.Value)
+        {
+            newNode.Next = Head;
+            Head = newNode;
+            return;
+        }
+            
         else
         {
             Node prvek = Head;
-            while (prvek != null)
+            while (prvek != null && prvek.Next.Value < newNode.Value)
             {
-                if (prvek.Value < value)
-                    if (prvek.Next != null)
-                        prvek = prvek.Next;
-                    else
-                        break;
-                else
-                    break;
+                prvek = (Node)prvek.Next;
 
             }
-            //if (prvek != null)
-            //{
-            //    Node newNode = new Node(value);
-            //    newNode.Next = prvek;
-            //    prvek.Next = newNode;
-            //}
+            newNode.Next = prvek.Next;
+            prvek.Next = newNode;
 
         }
 
