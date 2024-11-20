@@ -12,7 +12,7 @@
             int end = int.Parse(goalFriend[1]);
 
             var graph = new Dictionary<int, List<int>>(); // vytváří graf
-            for (int i = 0; i < number; i++)
+            for (int i = 0; i < number + 1; i++)
             {
                 graph[i] = new List<int>(); // každý prvek v grafu bude mít list přátel (zatím prázdný)
             }
