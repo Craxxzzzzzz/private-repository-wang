@@ -27,7 +27,7 @@
             }
 
             var path = FindPathBFS(graph, start, end); // vyhledává cestu pomocí BFS
-            if (path != null)
+            if (path == null)
             {
                 Console.WriteLine("neexistuje");
             }
