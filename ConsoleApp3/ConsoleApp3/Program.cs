@@ -20,7 +20,7 @@ namespace zasobnik
 
             bool spravne = true;
 
-            foreach(char zavorka in zavorky)
+            foreach (char zavorka in zavorky)
             {
                 if (Ochars.Contains(zavorka))
                 {
@@ -45,10 +45,35 @@ namespace zasobnik
             if (spravne == true)
             {
                 Console.WriteLine("Závorky jsou správně");
-            } 
+            }
+        }
+        static void soucet(string[] args)
+        {
+            Console.WriteLine("Zadejte číslo");
             
+            string cislo = Console.ReadLine();
+            
+            int number = int.Parse(cislo);
 
+            Stack<int> seznam = new Stack<int>(); 
+                
+        }
+        static void Findnumber (int number, Stack<int> seznam)
+        {
+            if (number == 0)
+            {
+                Console.WriteLine(string.Join("+", seznam));
+                return ;
+            }
 
+            int start = seznam.Count > 0 ? seznam.Peek() : 1;
+
+            for (int i = start; i < number; i++)
+            {
+                seznam.Push(i);
+                Findnumber(number - 1, seznam);
+                seznam.Pop();
+            }
 
         }
     }
