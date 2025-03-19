@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System.ComponentModel.Design;
+using System.Data;
+using System.Runtime.ExceptionServices;
 
 namespace connect4
 {
@@ -6,7 +8,7 @@ namespace connect4
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            
         }
 
         static bool Check(int numPlayers, int [,] field, int winReq, int[] curPosition)
@@ -16,26 +18,42 @@ namespace connect4
 
         static bool column(int numPlayer, int[,] field, int winReq, int[] curPosition)
         {
-            int positionColumn = field.GetLength(curPosition[0]);
-            int positionRow = field.GetLength(curPosition[1]);
-
-            static int FirstRowUnder(int positionRow, int positionColumn)
-            {
-                int value = field[positionColumn, positionRow];
-
-                if 
-
-                    return true;
-                else
-                    return false;
-            }
+            FirstRowUnder(int[,] field, int winReq, int[] curPosition);
         }
+        bool FirstRowUnder(int[,] field, int winReq, int[] curPosition)
+        {
+            int row = curPosition[0];
+            int col = curPosition[1];
+            int value = field[row, col];
+            int valueUnder = field[row + 1, col];
+            int count = 1;
+            int totalRows = field.GetLength(0);
 
+            if (value == valueUnder)
+            {
+                count++;
+
+                if (count >= winReq)
+                    return true;
+
+                row = row + 1;
+
+                if (row >= totalRows)
+                    return false;
+
+                return FirstRowUnder(field, winReq,curPosition);
+            }
+            else
+                return false;
+        }
         static bool row(int numPlayer, int[,] field, int winReq, int[] curPosition)
         {
 
         }
 
         static bool diagonal(int numPlayer, int[,] field, int winReq, int[] curPosition)
+        {
+
+        }
     }
 }
