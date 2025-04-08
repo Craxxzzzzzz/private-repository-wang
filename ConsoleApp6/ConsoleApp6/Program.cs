@@ -37,12 +37,12 @@ namespace Connect4
             {
                 players.Add(((char)('A' + i)).ToString()); //Podle abecedy přidává ke každému hráči své vlastní písmeno
             }
-            if (playerNum == 0 || rows == 0 || cols == 0 || winReq == 0) 
+            if (playerNum == 0 || rows == 0 || cols == 0 || winReq == 0)
             {
                 Console.WriteLine("Chybný zadání");
             }
-            
-            
+
+
             currentPlayer = 0;
         }
 
@@ -51,7 +51,7 @@ namespace Connect4
             while (true)
             {
                 board.Print();
-                Console.WriteLine("Hráč " + players[currentPlayer] +  ", zadej sloupec (0-" + (board.Cols - 1) +  "):");
+                Console.WriteLine("Hráč " + players[currentPlayer] + ", zadej sloupec (0-" + (board.Cols - 1) + "):");
 
                 if (int.TryParse(Console.ReadLine(), out int col) && board.validMove(col)) // tryparse vraci nejenom cislo prevedeny na int ale i jestli true nebo false
                 {
@@ -59,13 +59,13 @@ namespace Connect4
                     if (board.CheckWin(players[currentPlayer]))
                     {
                         board.Print();
-                        Console.WriteLine($"Hráč {players[currentPlayer]} vyhrál!");
+                        Console.WriteLine("Hráč " +(players[currentPlayer])+ " vyhrál!");
                         break;
                     }
                     if (board.IsFull())
                     {
                         board.Print();
-                        Console.WriteLine("Remíza!");
+                        Console.WriteLine("Remíza");
                         break;
                     }
                     currentPlayer = (currentPlayer + 1) % players.Count;
@@ -81,7 +81,7 @@ namespace Connect4
     class Board
     {
         private string[,] grid;
-        public int Rows { get; } // tento value nemuzeme menit jenom se podivat
+        public int Rows { get; } 
         public int Cols { get; }
         private int winReq;
 
@@ -93,7 +93,7 @@ namespace Connect4
             grid = new string[rows, cols];
         }
 
-        public void Print()
+        public void Print() //tiskneme celej board
         {
             for (int i = 0; i < Rows; i++)
             {
@@ -104,9 +104,9 @@ namespace Connect4
             Console.WriteLine(new string('-', Cols * 2));
         }
 
-        public bool validMove(int col)
+        public bool validMove(int col) 
         {
-            if (col>=0 && Cols>=col && grid[0, col] == null)
+            if (col >= 0 && Cols >= col && grid[0, col] == null)
                 return true;
             return false;
         }
@@ -130,27 +130,26 @@ namespace Connect4
             return true;
         }
 
-        public bool CheckWin(string symbol)
+        public bool CheckWin(string symbol) // kontroluje kazdy mozny smer
         {
-            return CheckDirection(symbol, 1, 0) || CheckDirection(symbol, 0, 1) ||
-                   CheckDirection(symbol, 1, 1) || CheckDirection(symbol, 1, -1);
+            return CheckDirection(symbol, 1, 0) || CheckDirection(symbol, 0, 1) ||CheckDirection(symbol, 1, 1) || CheckDirection(symbol, 1, -1);
         }
 
-        private bool CheckDirection(string symbol, int dRow, int dCol)
+        private bool CheckDirection(string symbol, int dRow, int dCol) // tahle cast a cast "print" mi pomahal pan Anikin, v podstate to stejný co jsem měl v minulém kódu ale vše je v jednom, pokud budete chít vysvětlení, zeptejte se mě o hodině a já se to pokusím vysvětlit
         {
             for (int row = 0; row < Rows; row++)
                 for (int col = 0; col < Cols; col++)
                 {
                     int count = 0;
-                    for (int i = 0; i < winCondition; i++)
+                    for (int i = 0; i < winReq; i++)
                     {
                         int newRow = row + i * dRow;
                         int newCol = col + i * dCol;
-                        if (newRow < 0 || newRow >= Rows || newCol < 0 || newCol >= Cols || grid[newRow, newCol] != symbol)
+                        if (newRow < 0 || newRow >= Rows || newCol < 0 || newCol >= Cols || grid[newRow, newCol] != symbol) 
                             break;
                         count++;
                     }
-                    if (count == winCondition) return true;
+                    if (count == winReq) return true;
                 }
             return false;
         }
